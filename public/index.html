@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agentic AI Test Case Generator - Universal Testing Platform</title>
+    <meta
+      name="description"
+      content="Universal AI-powered test case generation using multi-agent architecture. Generate comprehensive test cases for any project automatically."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <div class="logo-icon">🤖</div>
+            <div class="logo-text">
+              <h1>Agentic Test Generator</h1>
+              <p>Universal AI-Powered Testing Platform</p>
+            </div>
+          </div>
+          <div class="header-stats">
+            <div class="stat-item">
+              <span class="stat-value" id="totalTests">0</span>
+              <span class="stat-label">Tests Generated</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">7</span>
+              <span class="stat-label">AI Agents</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Agent Status Bar -->
+        <div class="agent-status-bar" id="agentStatus">
+          <div class="agent-step" data-agent="context">
+            <div class="agent-icon">🔍</div>
+            <span>Context Ingestion</span>
+          </div>
+          <div class="agent-step" data-agent="understanding">
+            <div class="agent-icon">🧠</div>
+            <span>Requirement Analysis</span>
+          </div>
+          <div class="agent-step" data-agent="modeling">
+            <div class="agent-icon">🧩</div>
+            <span>Test Modeling</span>
+          </div>
+          <div class="agent-step" data-agent="generation">
+            <div class="agent-icon">🧪</div>
+            <span>Test Generation</span>
+          </div>
+          <div class="agent-step" data-agent="validation">
+            <div class="agent-icon">📊</div>
+            <span>Coverage Validation</span>
+          </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+          <div class="section-header">
+            <h2>📝 Describe Your Feature or Requirement</h2>
+            <p>
+              Enter any description - user story, API spec, plain text, or
+              technical requirement
+            </p>
+          </div>
+
+          <div class="input-container">
+            <textarea
+              id="requirementInput"
+              placeholder="Example: Users can upload files up to 10MB. Supported formats are PDF, JPG, PNG. Users must be authenticated to upload files."
+              rows="8"
+            ></textarea>
+
+            <div class="input-options">
+              <div class="option-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="includeSecurity" checked />
+                  <span>Include Security Tests</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="includeBoundary" checked />
+                  <span>Include Boundary Tests</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" id="includeNegative" checked />
+                  <span>Include Negative Tests</span>
+                </label>
+              </div>
+
+              <button id="generateBtn" class="btn-primary">
+                <span class="btn-icon">✨</span>
+                Generate Test Cases
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Examples -->
+          <div class="quick-examples">
+            <span class="examples-label">Quick Examples:</span>
+            <button class="example-btn" data-example="login">
+              Login Feature
+            </button>
+            <button class="example-btn" data-example="upload">
+              File Upload
+            </button>
+            <button class="example-btn" data-example="payment">
+              Payment Processing
+            </button>
+            <button class="example-btn" data-example="api">REST API</button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-state" id="loadingState" style="display: none">
+          <div class="loading-spinner"></div>
+          <p class="loading-text">
+            AI agents are analyzing and generating test cases...
+          </p>
+          <div class="loading-progress">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection" style="display: none">
+          <!-- Coverage Summary -->
+          <div class="coverage-summary">
+            <h3>📊 Test Coverage Analysis</h3>
+            <div class="coverage-grid">
+              <div class="coverage-card">
+                <div class="coverage-icon">✅</div>
+                <div class="coverage-data">
+                  <span class="coverage-value" id="functionalCount">0</span>
+                  <span class="coverage-label">Functional</span>
+                </div>
+              </div>
+              <div class="coverage-card">
+                <div class="coverage-icon">❌</div>
+                <div class="coverage-data">
+                  <span class="coverage-value" id="negativeCount">0</span>
+                  <span class="coverage-label">Negative</span>
+                </div>
+              </div>
+              <div class="coverage-card">
+                <div class="coverage-icon">📏</div>
+                <div class="coverage-data">
+                  <span class="coverage-value" id="boundaryCount">0</span>
+                  <span class="coverage-label">Boundary</span>
+                </div>
+              </div>
+              <div class="coverage-card">
+                <div class="coverage-icon">🔒</div>
+                <div class="coverage-data">
+                  <span class="coverage-value" id="securityCount">0</span>
+                  <span class="coverage-label">Security</span>
+                </div>
+              </div>
+            </div>
+            <div class="coverage-score">
+              <div class="score-label">Overall Coverage Score</div>
+              <div class="score-value" id="coverageScore">0%</div>
+            </div>
+          </div>
+
+          <!-- Export Options -->
+          <div class="export-section">
+            <h3>💾 Export Test Cases</h3>
+            <div class="export-buttons">
+              <button class="export-btn" data-format="json">
+                <span class="export-icon">{ }</span>
+                JSON
+              </button>
+              <button class="export-btn" data-format="gherkin">
+                <span class="export-icon">🥒</span>
+                Gherkin (BDD)
+              </button>
+              <button class="export-btn" data-format="markdown">
+                <span class="export-icon">📝</span>
+                Markdown
+              </button>
+              <button class="export-btn" data-format="csv">
+                <span class="export-icon">📊</span>
+                CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Test Cases Display -->
+          <div class="test-cases-container">
+            <div class="test-cases-header">
+              <h3>🧪 Generated Test Cases</h3>
+              <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="Functional">
+                  Functional
+                </button>
+                <button class="filter-btn" data-filter="Negative">
+                  Negative
+                </button>
+                <button class="filter-btn" data-filter="Boundary">
+                  Boundary
+                </button>
+                <button class="filter-btn" data-filter="Security">
+                  Security
+                </button>
+              </div>
+            </div>
+            <div id="testCasesList" class="test-cases-list"></div>
+          </div>
+
+          <!-- Context & Understanding -->
+          <div class="insights-section">
+            <h3>🔍 AI Analysis Insights</h3>
+            <div class="insights-grid">
+              <div class="insight-card">
+                <h4>Detected Features</h4>
+                <div id="detectedFeatures" class="tag-list"></div>
+              </div>
+              <div class="insight-card">
+                <h4>Identified Actors</h4>
+                <div id="detectedActors" class="tag-list"></div>
+              </div>
+              <div class="insight-card">
+                <h4>Business Rules</h4>
+                <div id="businessRules" class="rule-list"></div>
+              </div>
+              <div class="insight-card">
+                <h4>Assumptions Made</h4>
+                <div id="assumptions" class="rule-list"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>
+          🤖 Powered by Multi-Agent AI Architecture | Universal Test Case
+          Generator
+        </p>
+        <p class="footer-note">
+          Works with any project - Web, API, Mobile, Desktop
+        </p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

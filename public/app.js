@@ -2,6 +2,52 @@
 // AGENTIC TEST GENERATOR - CLIENT APP
 // ===================================
 
+// ===== THEME TOGGLE FUNCTIONALITY =====
+// Get theme from localStorage or default to dark
+const getTheme = () => localStorage.getItem('theme') || 'dark';
+const setTheme = (theme) => {
+    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeToggleTooltip(theme);
+};
+
+// Update tooltip text based on current theme
+const updateThemeToggleTooltip = (theme) => {
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.setAttribute(
+            'data-tooltip', 
+            theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'
+        );
+    }
+};
+
+// Initialize theme on page load
+document.documentElement.setAttribute('data-theme', getTheme());
+
+// Theme toggle button event listener
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+    
+    if (themeToggle) {
+        // Set initial tooltip
+        updateThemeToggleTooltip(getTheme());
+        
+        // Toggle theme on click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = getTheme();
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+            
+            // Add a little animation feedback
+            themeToggle.style.transform = 'scale(0.9) rotate(180deg)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 300);
+        });
+    }
+});
+
 // State management
 let currentTestCases = [];
 let currentResult = null;

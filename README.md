@@ -240,6 +240,16 @@ The AI extracts:
 - Assumptions
 - Gaps
 
+### 🌓 Dark/Light Mode
+
+- **Beautiful dual themes** - Dark (default) and Light mode
+- **Smooth transitions** - 300ms CSS animations
+- **Persistent storage** - Remembers your preference
+- **Floating toggle button** - Easy access in bottom-right corner
+- **Full accessibility** - WCAG AAA compliant
+
+👉 **[Learn more about Dark/Light Mode](THEME_TOGGLE.md)**
+
 ---
 
 ## 🔧 Technical Stack
